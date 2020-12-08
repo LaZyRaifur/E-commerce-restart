@@ -11,7 +11,7 @@ const Shop = () => {
     
     
     const handleAddProduct =(product)=>{
-        console.log('product added',product);
+        
         const newCart = [...cart,product];
         setCart(newCart);
         const sameProduct = newCart.filter(pd=> pd.key === product.key)
@@ -20,7 +20,7 @@ const Shop = () => {
 
     }
     return (
-        <div className="shop-container">
+        <div className="twin-container">
         <div className="product-container">
     
         {

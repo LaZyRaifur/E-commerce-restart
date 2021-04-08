@@ -2,7 +2,7 @@
 import React,{useContext, useState} from 'react';
 import { UserContext } from "../../App";
 import { useHistory, useLocation } from "react-router";
-import { handleGoogleSignIn, initializeLoginFramework, handleSignOut, handleFbSignIn } from './LoginManager';
+import { handleGoogleSignIn, initializeLoginFramework, handleSignOut, handleFbSignIn, createUserWithEmailAndPassword, signInWithEmailAndPassword } from './LoginManager';
 
 
 // firebase.initializeApp(firebaseConfig)
@@ -39,9 +39,10 @@ function Login() {
   const GoogleSignIn=() => {
     handleGoogleSignIn()
   .then(res =>{
-    setUser(res);
-    setLoggedInUser(res);
-    history.replace(from);
+     handleResponse(res,true);
+    // setUser(res);
+    // setLoggedInUser(res);
+    // history.replace(from);
   })
   }
 
@@ -49,17 +50,18 @@ function Login() {
    const SignOut=() => {
      handleSignOut()
      .then(res =>{
-       setUser(res);
-       setLoggedInUser(res);
+       handleResponse(res,false);
      })
    }
 
    const fbSignIn = () => {
      handleFbSignIn()
      .then(res =>{
-       setUser(res);
-       setLoggedInUser(res);
-       history.replace(from);
+      
+      handleResponse(res,true);
+      //  setUser(res);
+      //  setLoggedInUser(res);
+      //  history.replace(from);
      })
    }
   const handleChange = (e) => {
@@ -71,16 +73,39 @@ function Login() {
   const handleSubmit = (e) => {
     // console.log(user.email,user.password);
     if(newUser && user.name && user.password){
+      createUserWithEmailAndPassword(user.name,user.email, user.password)
+      .then(res =>{
+        handleResponse(res,true);
+        
+        // setUser(res);
+        // setLoggedInUser(res);
+        // history.replace(from);
+      })
      
     }
 
 
     if(!newUser && user.email && user.password){
+
+       signInWithEmailAndPassword(user.email, user.password)
+       .then(res =>{
+        handleResponse(res,true);
+        //  setUser(res);
+        //  setLoggedInUser(res);
+        //  history.replace(from);
+       })
      
     }
     e.preventDefault();
   }
-
+  
+  const handleResponse =(res, redirect)=> {
+    setUser(res);
+    setLoggedInUser(res);
+    if(redirect){
+      history.replace(from);
+    }
+  }
 
   const handleBlur=(e)=> {
     let isFileValid = true;

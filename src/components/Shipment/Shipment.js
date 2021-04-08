@@ -16,17 +16,19 @@ const Shipment = () => {
     return (
       
       <form className="ship-form" onSubmit={handleSubmit(onSubmit)}>
-        {/* <input defaultValue={loggedInUser.email} {...register("example")} /> */}
-        <input name="name" defaultValue={loggedInUser.name}{...register("exampleRequired", { required: true })} placeholder="Your Name" />  
+
+        {/* just hidden from input value {...register("exampleRequired", { required: true })} */}
+     
+        <input name="name" defaultValue={loggedInUser.name}{...register("name", { required: true })} placeholder="Your Name" />  
         {errors.name && <span className="error">Name is required</span>}
-        <input name="email" defaultValue={loggedInUser.email} {...register("exampleRequired", { required: true })} placeholder="Email address"/>  
+        <input name="email" defaultValue={loggedInUser.email} {...register("email", { required: true })} placeholder="Email address"/>  
         {errors.email && <span className="error">Email is required</span>}
 
-        <input name="address" {...register("exampleRequired", { required: true })} placeholder="address"/>  
+        <input name="address" {...register("address", { required: true })} placeholder="address"/>  
         
         {errors.address && <span className="error">Address is required</span>}
         
-        <input name="phone" {...register("exampleRequired", { required: true })} placeholder="Phone number"/>  
+        <input name="phone"{...register("phone", { required: true })} placeholder="Phone number"/>  
         {errors.phone && <span className="error">Phone Number is required</span>}
         
         <input type="submit" />
